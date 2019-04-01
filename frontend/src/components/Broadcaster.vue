@@ -6,15 +6,15 @@
     <div class="frame">
       <div class="header">
         <div class="title">
-          Weather Picker
+          <img src= "stardew-cloud.png" /> <span>Weather Picker</span>
         </div>
         <div class="title-sub">
           Broadcaster Panel
         </div>
       </div>
       <div class="body">
-          <button @click="newVote"> Start a new vote </button>
-          <button @click="endVote"> End vote & process winner </button>
+          <p><a class="button" @click="newVote">Start a new vote</a></p>
+          <p><a class="button" @click="endVote">End vote &amp; process winner</a></p>
       </div>
     </div>
   </div>
