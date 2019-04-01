@@ -6,12 +6,11 @@
     <div class="frame">
       <div class="header">
         <div class="title">
-          Weather Picker
+          <img src= "stardew-cloud.png" /> <span>Weather Picker</span>
         </div>
         <div class="title-sub">
-          You Control the Weather
+          You control the weather in Stardew Valley!
         </div>
-
       </div>
 
       <div class="body">
