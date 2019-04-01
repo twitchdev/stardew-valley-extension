@@ -1,6 +1,6 @@
 @font-face {
   font-family: "SVThin";
-  src: url('svthin.ttf') format("truetype");
+  src: url('../fonts/svthin.ttf') format("truetype");
 }
 
 body {
@@ -119,7 +119,7 @@ body {
     outline: none;
     overflow: visible;
     cursor: pointer;
-    background: url('button.png') no-repeat;
+    background: url('../imgs/button.png') no-repeat;
     color: #413014;
     width: 274px;
     height: 26px;
