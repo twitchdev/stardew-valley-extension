@@ -22,7 +22,7 @@ body {
   width: 318px;
   height: 496px;
   padding: 0px;
-  background: url('frame.png') no-repeat;
+  background: url('../imgs/frame.png') no-repeat;
 }
 
 .header {

@@ -6,7 +6,7 @@
     <div class="frame">
       <div class="header">
         <div class="title">
-          <img src= "stardew-cloud.png" /> <span>Weather Picker</span>
+          <img src= "../assets/imgs/stardew-cloud.png" /> <span>Weather Picker</span>
         </div>
         <div class="title-sub">
           Broadcaster Panel
@@ -31,7 +31,7 @@ export default {
   data () {
     return {
       weatherCondition: '',
-      vote: '';
+      vote: ''
     }
   },
   methods: {

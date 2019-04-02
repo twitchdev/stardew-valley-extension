@@ -14,15 +14,20 @@ export default new Router({
       component: Index
     },
     {
-      path: '/panel.html',
+      path: '/panel',
       name: 'Panel',
       component: Panel
     },
     {
-      path: '/broadcaster.html',
+      path: '/mobile',
+      name: 'Mobile',
+      component: Panel
+    },
+    {
+      path: '/broadcaster',
       name: 'Broadcaster',
       component: Broadcaster
-    },
-  ],
-  mode: 'history'
+    }//,
+  ]//,
+  // mode: 'history'
 })
