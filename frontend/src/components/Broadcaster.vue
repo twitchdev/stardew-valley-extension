@@ -23,6 +23,8 @@
 <script>
 const ROOT_URL = 'https://lhr2ss6lzf.execute-api.us-east-2.amazonaws.com/prod/';
 let channelID= '';
+let userID = '';
+let token = '';
 const twitch = window.Twitch.ext;
 let voteID = '';
 
@@ -58,10 +60,10 @@ export default {
           //console.log(result);
           //twitch.rig.log(result);
           // use pubsub to alert all extension a winner has been selected
-          let pubMessage = {'type': 'end', 
-                            'message': 'Voting Ended!', 
+          let pubMessage = {'type': 'end',
+                            'message': 'Voting Ended!',
                             'winning_weather': result['winning_weather']
-                           } 
+                           }
           twitch.send('broadcast', 'application/json',JSON.stringify(pubMessage));
         });
     },
@@ -78,9 +80,9 @@ export default {
     },
   },
   async beforeMount() {
-    await twitch.onAuthorized((auth) => {  
+    await twitch.onAuthorized((auth) => {
       userID = auth.userId;
-      channelID = auth.channelId; 
+      channelID = auth.channelId;
       token = auth.token;
       this.getVoteID();
     });

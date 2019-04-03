@@ -4,32 +4,10 @@
   "backendFolderName": "",
   "extensionViews": [
     {
-      "id": "1",
-      "label": "panel",
-      "channelId": "182891647",
-      "displayChannelName": "mauerbac",
-      "type": "panel",
-      "features": {
-        "isChatEnabled": false
-      },
-      "linked": false,
-      "linkedUserId": "",
-      "mode": "viewer",
-      "isPopout": false,
-      "role": "Logged-In Viewer",
-      "x": 0,
-      "y": 0,
-      "orientation": "Portrait",
-      "frameSize": {
-        "width": 640,
-        "height": 480
-      }
-    },
-    {
-      "id": "2",
+      "id": "3",
       "label": "",
-      "channelId": "182891647",
-      "displayChannelName": "mauerbac",
+      "channelId": "262558124",
+      "displayChannelName": "breci",
       "type": "dashboard",
       "features": {
         "isChatEnabled": false
@@ -51,20 +29,20 @@
   "manifest": {
     "anchor": "panel",
     "assetUrls": [],
-    "authorName": "mauerbac",
+    "authorName": "",
     "bitsEnabled": false,
     "canInstall": true,
     "configUrl": "http://localhost:8080/config.html",
     "configurationLocation": "none",
-    "description": "TODO",
+    "description": "",
     "eulaTosUrl": "",
     "hasChatSupport": false,
     "iconUrl": "",
     "iconUrls": {},
-    "id": "n7tl4s82j4t7ukowth87p6azvjz0cf",
+    "id": "o79us2hso0k0q9r71zkeoyujzowkeg",
     "installationCount": -42,
-    "liveConfigUrl": "http://localhost:8080/broadcaster.html",
-    "name": "stardew_valley",
+    "liveConfigUrl": "http://localhost:8080/live_config.html",
+    "name": "test-extenstion-router",
     "panelHeight": 300,
     "privacyPolicyUrl": "",
     "requestIdentityLink": false,
@@ -73,10 +51,10 @@
     "sku": "",
     "state": "Testing",
     "subscriptionsSupportLevel": "none",
-    "summary": "TODO",
+    "summary": "",
     "supportEmail": "",
     "vendorCode": "",
-    "version": "1.2.0",
+    "version": "0.0.1",
     "viewerUrl": "http://localhost:8080/panel.html",
     "viewerUrls": {
       "mobile": "http://localhost:8080/mobile.html",
@@ -96,7 +74,7 @@
         "canLinkExternalContent": false
       },
       "liveConfig": {
-        "viewerUrl": "http://localhost:8080/broadcaster.html",
+        "viewerUrl": "http://localhost:8080/live_config.html",
         "canLinkExternalContent": false
       }
     },
@@ -105,5 +83,5 @@
   },
   "frontendCommand": "",
   "frontendFolderName": "",
-  "name": "stardew_valley"
+  "name": "test-extenstion-router"
 }
