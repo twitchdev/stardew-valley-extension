@@ -60,7 +60,7 @@ export default {
     return {
       weatherCondition: '',
       vote: '',
-      errorMessage: 'Select your weather vote',
+      errorMessage: 'Select your weather to vote',
       voteID: ''
     }
   },
@@ -69,7 +69,8 @@ export default {
       // clear previous votes, if any
       this.clearVotes();
       // process current vote
-      event.currentTarget.children[2].innerHTML = '✅';
+      event.currentTarget.children[2].innerHTML = "<img src='https://s3.us-east-2.amazonaws.com/stardew-assets/heart.png'>;"
+
       fetch (`${ROOT_URL}vote`, {
         method: 'POST',
         headers: new Headers ({ 'Content-Type': 'application/json' }
@@ -111,7 +112,7 @@ export default {
           this.voteID = pubSubMessage.vote_id;
           break;
         case 'end':
-          this.errorMessage = pubSubMessage.message + 'The winner is ' + weatherDict[pubSubMessage.winning_weather];
+          this.errorMessage = pubSubMessage.message + ' The winner is ' + weatherDict[pubSubMessage.winning_weather];
           this.clearVotes();
           break;
       }

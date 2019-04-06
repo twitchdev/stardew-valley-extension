@@ -54,11 +54,11 @@ body {
 .title-sub {
   position: absolute;
   left: 8px;
-  width: 310px;
+  width: 300px;
   font-size: 16px;
   top: 42px;
   text-shadow: -1px -1px 0px #FFEC8B;
-  color: #CB494F;
+  color: #753005;
 }
 
 .timer {
