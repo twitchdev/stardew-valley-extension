@@ -57,9 +57,6 @@ export default {
         headers: new Headers({'Content-Type': 'application/json'},
           ),
         }).then(data => data.json()).then(result => {
-          //console.log(result);
-          //twitch.rig.log(result);
-          // use pubsub to alert all extension a winner has been selected
           let pubMessage = {'type': 'end',
                             'message': 'Voting Ended!',
                             'winning_weather': result['winning_weather']
@@ -73,8 +70,6 @@ export default {
         headers: new Headers({'Content-Type': 'application/json'},
         ),
       }).then(data => data.json()).then(result => {
-        //console.log(result);
-        //twitch.rig.log(result);
         voteID = result['vote_id'];
       });
     },

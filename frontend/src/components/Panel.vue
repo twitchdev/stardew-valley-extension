@@ -54,6 +54,9 @@ let voteID = '';
 const weatherDict = { 0: 'Sunny', 1: 'Rain', 2: 'Wind', 3: 'Storm', 5: 'Snow' };
 const twitch = window.Twitch.ext;
 
+import Heart from '../assets/imgs/heart.png'
+const test = "<img :src='Heart' />";
+
 export default {
   name: 'Panel',
   data () {
@@ -61,7 +64,8 @@ export default {
       weatherCondition: '',
       vote: '',
       errorMessage: 'Select your weather to vote',
-      voteID: ''
+      voteID: '',
+      //heart: require('../assets/imgs/heart.png')
     }
   },
   methods: {
@@ -69,7 +73,10 @@ export default {
       // clear previous votes, if any
       this.clearVotes();
       // process current vote
-      event.currentTarget.children[2].innerHTML = "<img src='https://s3.us-east-2.amazonaws.com/stardew-assets/heart.png'>;"
+      debugger;
+      event.currentTarget.children[2].innerHTML = '<img :src="Heart" />'
+      const node = document.createTextNode("This is new.");
+
 
       fetch (`${ROOT_URL}vote`, {
         method: 'POST',
