@@ -34,8 +34,34 @@ Resources:
         Post:
           Type: 'Api'
           Properties:
-            Path: '/'
-            Method: 'vote'
+            Path: '/vote'
+            Method: 'post'
+
+  IdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../id/
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Timeout: 30
+        Policies:
+            - Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - dynamodb:GetItem
+                  Resource:
+                    Fn::ImportValue: "StardewWeatherStateTableArn"
+      Environment:
+        Variables:
+          WEATHER_TABLE:
+            Fn::ImportValue: "StardewWeatherStateTableName"
+      Events:
+        Get:
+          Type: 'Api'
+          Properties:
+            Path: '/vote'
+            Method: 'get'
 
   WeatherFunction:
     Type: AWS::Serverless::Function
@@ -61,8 +87,34 @@ Resources:
         Get:
           Type: 'Api'
           Properties:
-            Path: '/'
-            Method: 'current_weather'
+            Path: '/current_weather'
+            Method: 'get'
+
+  ResetWeatherFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../reset/
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Timeout: 30
+        Policies:
+            - Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - dynamodb:UpdateItem
+                  Resource:
+                    Fn::ImportValue: "StardewWeatherStateTableArn"
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Fn::ImportValue: "StardewWeatherStateTableName"
+      Events:
+        Get:
+          Type: 'Api'
+          Properties:
+            Path: '/current_weather'
+            Method: 'post'
 
   ProcessWinnerFunction:
     Type: AWS::Serverless::Function
@@ -90,6 +142,12 @@ Resources:
             Fn::ImportValue: "StardewWeatherStateTableName"
           VOTE_TABLE:
             Fn::ImportValue: "StardewVotesStateTableName"
+      Events:
+        Get:
+          Type: 'Api'
+          Properties:
+            Path: '/process_winner'
+            Method: 'get'
 
   ProcessnewVoteFunction:
     Type: AWS::Serverless::Function
@@ -110,6 +168,12 @@ Resources:
         Variables:
           WEATHER_TABLE:
             Fn::ImportValue: "StardewWeatherStateTableName"
+      Events:
+        Get:
+          Type: 'Api'
+          Properties:
+            Path: '/process_new_vote'
+            Method: 'get'
 
 Outputs:
   VoteFunction:

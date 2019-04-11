@@ -1,10 +1,18 @@
 # Stardew Dev Tour Demo
 
 import json
+import os
 import boto3
 
-dynamodb = boto3.resource('dynamodb', 'us-east-2')
-table_users = dynamodb.Table('stardew_weather_state')
+
+def get_env_var(name):
+    return os.environ[name] if name in os.environ else None
+
+
+WEATHER_TABLE_NAME = get_env_var('WEATHER_TABLE')
+
+dynamodb = boto3.resource('dynamodb', get_env_var('AWS_REGION'))
+table_users = dynamodb.Table(WEATHER_TABLE_NAME)
 
 
 def lambda_handler(event, context):

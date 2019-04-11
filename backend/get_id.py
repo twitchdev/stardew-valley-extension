@@ -2,11 +2,10 @@
 
 import json
 import boto3
-from boto3.dynamodb.conditions import Key
-from botocore.exceptions import ClientError
 
 dynamodb = boto3.resource('dynamodb', 'us-east-2')
 table_users = dynamodb.Table('stardew_weather_state')
+
 
 def lambda_handler(event, context):
     channel_id = event['queryStringParameters']['channel_id']
