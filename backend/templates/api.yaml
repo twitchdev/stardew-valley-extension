@@ -1,0 +1,122 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    API for Stardew Extension
+
+Resources:
+    StardewRestAPI:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: "Stardew Extension API"
+    #### RESOURCES ####
+    CurrentWeatherResource:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        ParentId: !GetAtt StardewRestAPI.RootResourceId
+        PathPart: "current_weather"
+        RestApiId: !Ref StardewRestAPI
+
+    ProcessNewVoteResource:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        ParentId: !GetAtt StardewRestAPI.RootResourceId
+        PathPart: "process_new_vote"
+        RestApiId: !Ref StardewRestAPI
+
+    ProcessWinnerResource:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        ParentId: !GetAtt StardewRestAPI.RootResourceId
+        PathPart: "process_winner"
+        RestApiId: !Ref StardewRestAPI
+
+    VoteResource:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        ParentId: !GetAtt StardewRestAPI.RootResourceId
+        PathPart: "vote"
+        RestApiId: !Ref StardewRestAPI
+
+    #### METHODS ####
+    GetCurrentWeatherMethod:
+      Type: AWS::ApiGateway::Method
+      DependsOn:
+        - RobotsResource
+      Properties:
+        HttpMethod: GET
+        ResourceId: !Ref CurrentWeatherResource
+        RestApiId: !Ref StardewRestAPI
+        AuthorizationType: AWS_IAM
+        MethodResponses:
+          - ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: true
+            StatusCode: 200
+        Integration:
+          Type: AWS
+          IntegrationHttpMethod: POST
+          Credentials:
+            Fn::GetAtt:
+              - DDBReadRole
+              - Arn
+          Uri: !Sub "arn:aws:apigateway:${AWS::Region}:dynamodb:action/GetItem"
+          RequestTemplates:
+            application/json: !Sub
+              - |
+                {
+                    "TableName": "${tableName}",
+                    "Limit": 1,
+                    "KeyConditionExpression": "SerialNumber = :v1",
+                    "ExpressionAttributeValues": {":v1": {"S": "$input.params('serialNumber')"}}
+                }
+              - tableName:
+                  Fn::ImportValue: "StardewWeatherStateTableName"
+          IntegrationResponses:
+            - StatusCode: 200
+              ResponseTemplates:
+                application/json:
+                  Fn::Sub: |
+                    #set($inputRoot = $input.path('$'))
+                    #if($inputRoot.Count == 0)
+                    #set($context.responseOverride.status = 404)
+                    {"Uh oh, Spaghetti O's!!!!"}
+                    #else
+                    #set($elem = $inputRoot.Items[0])
+                    {"SerialNumber": "$elem.SerialNumber.S", "RobotID": "$elem.RobotID.S", "SKU": "$elem.SKU.S"}
+                    #end
+            - StatusCode: 500
+
+    StardewRestAPIdeployment:
+      Type: AWS::ApiGateway::Deployment
+      DependsOn:
+        - GetCurrentWeatherMethod
+      Properties:
+        Description: "Prod Stage for "
+        RestApiId:
+          Ref: StardewRestAPI
+        StageName: prod
+
+    DDBReadRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service:
+                  - "apigateway.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
+        Path: "/"
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess
+
+
+Outputs:
+
+    StardewAPI:
+      Description: "API Gateway reference"
+      Value:
+        Ref: StardewRestAPI
+      Export :
+        Name: "APIGatewayId"
