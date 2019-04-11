@@ -5,6 +5,11 @@ Description: >
 
   Sample SAM Template for stardew
 
+Globals:
+  Api:
+    Cors:
+      AllowOrigin: "'*'"
+
 Resources:
   VoteFunction:
     Type: AWS::Serverless::Function
