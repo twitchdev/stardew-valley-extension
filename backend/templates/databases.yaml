@@ -1,0 +1,76 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Databases for Stardew Weather Twitch Extension
+
+Resources:
+  StardewWeatherStateTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "channel_id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "channel_id"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+  StardewVotesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "channel_vote"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "vote_item"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+  StardewViewersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "user_id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "channel_vote"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+
+Outputs:
+  StardewWeatherStateTableName:
+    Description: "Name of the DDB Table that holds the weather state"
+    Value: !Ref StardewWeatherStateTable
+    Export:
+      Name: "StardewWeatherStateTableName"
+  StardewWeatherStateTableArn:
+    Description: "ARN of the DDB Table that holds the weather state"
+    Value: !GetAtt [StardewWeatherStateTable, "Arn"]
+    Export:
+      Name: "StardewWeatherStateTableArn"
+
+  StardewVotesStateTableName:
+    Description: "Name of the DDB Table that holds the votes information"
+    Value: !Ref StardewVotesTable
+    Export:
+      Name: "StardewVotesStateTableName"
+  StardewVotesStateTableArn:
+    Description: "ARN of the DDB Table that holds the votes information"
+    Value: !GetAtt [StardewVotesTable, "Arn"]
+    Export:
+      Name: "StardewVotesStateTableArn"
+
+  StardewViewersStateTableName:
+    Description: "Name of the DDB Table that holds the viewers state"
+    Value: !Ref StardewViewersTable
+    Export:
+      Name: "StardewViewersStateTableName"
+  StardewViewersStateTableArn:
+    Description: "ARN of the DDB Table that holds the viewers state"
+    Value: !GetAtt [StardewViewersTable, "Arn"]
+    Export:
+      Name: "StardewViewersStateTableArn"
