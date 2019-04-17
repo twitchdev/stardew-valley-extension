@@ -1,13 +1,20 @@
 # Stardew Dev Tour Demo
 import json
+import os
 import boto3
-from boto3.dynamodb.conditions import Key
-from botocore.exceptions import ClientError
 
 
-dynamodb = boto3.resource('dynamodb', 'us-east-2')
-votes_table = dynamodb.Table('stardew_votes')
-viewers_table = dynamodb.Table('stardew_viewers')
+def get_env_var(name):
+    return os.environ[name] if name in os.environ else None
+
+
+VOTE_TABLE_NAME = get_env_var('VOTE_TABLE')
+VIEWERS_TABLE_NAME = get_env_var('VIEWERS_TABLE')
+
+dynamodb = boto3.resource('dynamodb', get_env_var('AWS_REGION'))
+votes_table = dynamodb.Table(VOTE_TABLE_NAME)
+viewers_table = dynamodb.Table(VIEWERS_TABLE_NAME)
+
 
 def lambda_handler(event, context):
     return_message = 'Vote recorded'
