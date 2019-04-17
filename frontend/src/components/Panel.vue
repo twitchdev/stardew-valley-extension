@@ -6,7 +6,7 @@
     <div class="frame">
       <div class="header">
         <div class="title">
-          <img src= "../assets/imgs/stardew-cloud.png" /> <span>Weather Picker</span>
+          <img src="../assets/imgs/stardew-cloud.png" /> <span>Weather Picker</span>
         </div>
         <div class="title-sub">
           You control the weather in Stardew Valley!
@@ -16,31 +16,14 @@
       <div class="body">
         <div id="error-message" class="message">{{errorMessage}}</div>
 
-        <div id="0" @click="processVote($event)" class="weather">
-          <div class="day">Sun</div>
-          <img src="../assets/imgs/stardew-weather-sun.png" />
-          <span class="vote"></span>
-        </div>
-        <div id="1" @click="processVote($event)" class="weather">
-          <div class="day">Rain</div>
-          <img src="../assets/imgs/stardew-weather-rain.png" />
-          <span class="vote"></span>
-        </div>
-        <div id="2" @click="processVote($event)" class="weather">
-          <div class="day">Wind</div>
-          <img src="../assets/imgs/stardew-weather-wind.png" />
-          <span class="vote"></span>
-        </div>
-        <div id="3" @click="processVote($event)" class="weather">
-          <div class="day">Storm</div>
-          <img src="../assets/imgs/stardew-weather-storm.png" />
-          <span class="vote"></span>
-        </div>
-        <div  id="5" @click="processVote($event)" class="weather">
-          <div class="day">Snow</div>
-          <img src="../assets/imgs/stardew-weather-snow.png" />
-          <span class="vote"></span>
-        </div>
+      <div v-for="state in states" @click="processVote(state)" class="weather">
+        <div class="day" >{{state.day}}</div>
+        <img :src="state.image" />
+        <span class="vote">
+          <img v-if="state.voted" src="../assets/imgs/heart.png"/>
+        </span>
+      </div>  
+        
       </div>
     </div>
   </div>
@@ -54,9 +37,6 @@ let voteID = '';
 const weatherDict = { 0: 'Sunny', 1: 'Rain', 2: 'Wind', 3: 'Storm', 5: 'Snow' };
 const twitch = window.Twitch.ext;
 
-import Heart from '../assets/imgs/heart.png'
-const test = "<img :src='Heart' />";
-
 export default {
   name: 'Panel',
   data () {
@@ -65,17 +45,50 @@ export default {
       vote: '',
       errorMessage: 'Select your weather to vote',
       voteID: '',
-      //heart: require('../assets/imgs/heart.png')
+      states: [
+        {
+          day: 'Sun',
+          image: require('../assets/imgs/stardew-weather-sun.png'),
+          voted: false,
+          id: 0
+        },
+        {
+          day: 'Rain',
+          image: require('../assets/imgs/stardew-weather-rain.png'),
+          voted: false,
+          id: 1
+        },
+        {
+          day: 'Wind',
+          image: require('../assets/imgs/stardew-weather-wind.png'),
+          voted: false,
+          id: 2
+        },
+        {
+          day: 'Storm',
+          image: require('../assets/imgs/stardew-weather-storm.png'),
+          voted: false,
+          id: 3
+        },
+        {
+          day: 'Snow',
+          image: require('../assets/imgs/stardew-weather-snow.png'),
+          voted: false,
+          id: 5
+        },
+      ]
     }
   },
   methods: {
+    setVoted(day) {
+      this.states.forEach(state => {
+        state.voted = state.day === day;
+      });
+    },
     processVote (event) {
-      // clear previous votes, if any
-      this.clearVotes();
-      // process current vote
-      debugger;
-      event.currentTarget.children[2].innerHTML = '<img :src="Heart" />'
-      const node = document.createTextNode("This is new.");
+      //this.clearVotes();
+      this.setVoted(event.day);
+      console.log(event);
 
 
       fetch (`${ROOT_URL}vote`, {
@@ -86,7 +99,7 @@ export default {
           user_id: `${userID}`,
           channel_id: `${channelID}`,
           vote_id: `${this.voteID}`,
-          vote_item: event.currentTarget.id
+          vote_item: event.id
         })
       }).then(data => data.json()).then(result => {
         //console.log(result);

@@ -45,9 +45,9 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
-        options: {
-          name: 'assets/imgs/[hash]-[name].[ext]'
-        }
+        // options: {
+        //   name: 'assets/imgs/[hash]-[name].[ext]'
+        // }
       },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,

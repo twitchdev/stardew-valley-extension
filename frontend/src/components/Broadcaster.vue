@@ -43,10 +43,7 @@ export default {
         headers: new Headers({'Content-Type': 'application/json'},
           ),
         }).then(data => data.json()).then(result => {
-          //console.log(result);
-          //twitch.rig.log(result);
           voteID = result['new_vote_id'];
-          //console.log('the new vote id is ' + voteID);
           let pubMessage = {'type': 'new', 'message': 'A new vote has started!', 'vote_id': voteID};
           twitch.send('broadcast', 'application/json', JSON.stringify(pubMessage));
       });
