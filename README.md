@@ -29,4 +29,8 @@ First, you need install the [SAM toolkit](https://aws.amazon.com/serverless/sam/
 
 Then run `sam deploy -t databases.yaml` followed by `sam deploy -t functions.yaml` within the templates folder.
 
+## The Game Mod
+
+The interaction between Stardew valley running on the computer and our backend is controlled by a game mod. This mod handles polling the backend to check if a new weather condition is available, as well as forcing the weather change. The mod can be downloaded on (Curse Forge)(https://www.curseforge.com/stardewvalley/mods/twitch-in-stardew-valley/files).
+
 
